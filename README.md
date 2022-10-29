@@ -20,7 +20,7 @@ First, when You run the server, please see if it's working [here](http://127.0.0
 
 If Yes, then please use Postman or other tool that will help You connect via websocket to the endpoint: `127.0.0.1:8007/api/v1/order-handling`.
 
-To see how it's working You can use push JSON data as follow (one by one, each line alone):
+To see how it's working You can use this JSON data as follow (one by one, each line alone):
 
 ```JSON
 {"type": "Limit", "order": {"direction": "Buy", "id": 1, "price": 14, "quantity": 20}}
@@ -35,7 +35,7 @@ To see how it's working You can use push JSON data as follow (one by one, each l
 {"type": "Limit", "order": {"direction": "Sell", "id": 10, "price": 16, "quantity": 20}}
 ```
 
-As a results You will get following results:
+As a result You will get following output:
 
 ```JSON
 {"buyOrders":[{"id":3,"price":12,"quantity":11}],"sellOrders":[{"id":10,"price":16,"quantity":20},{"id":6,"price":20,"quantity":200}]}
