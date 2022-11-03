@@ -15,6 +15,16 @@ sh ./build.sh docker
 % docker run -p 8007:8007 order-book:dev
 ```
 
+If You would like to connect the the system in std In & Out interface,
+please use client shell called `obcli.py` as follow:
+```bash
+% python -m venv .venv
+% source .venv/bin/activate
+(.venv)% pip install --upgrade pip
+(.venv)% pip install websockets
+(.venv)% python obcli.py
+```
+
 # Use case
 First, when You run the server, please see if it's working [here](http://127.0.0.1:8007/api/v1/healthcheck/version).
 
