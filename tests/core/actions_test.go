@@ -170,10 +170,10 @@ func TestCoreAction(t *testing.T) {
 			session := core.GetSessionOrders(2)
 			assert.Equal(t, 2, len(session.SellOrders))
 			assert.Equal(t, 100, session.SellOrders[0].Quantity)
-			assert.Equal(t, 12, session.SellOrders[0].ID)
+			assert.Equal(t, 13, session.SellOrders[0].ID)
 			assert.Equal(t, 100, session.SellOrders[0].Price)
 			assert.Equal(t, 100, session.SellOrders[1].Quantity)
-			assert.Equal(t, 13, session.SellOrders[1].ID)
+			assert.Equal(t, 12, session.SellOrders[1].ID)
 			assert.Equal(t, 100, session.SellOrders[1].Price)
 		})
 }

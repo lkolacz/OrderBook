@@ -23,13 +23,6 @@ func WebSocketOrderHandling(h *handler, w http.ResponseWriter, r *http.Request) 
 		log.Println(err)
 	}
 
-	// current status
-	session := core.GetSessionOrders(VisibleStock)
-	err = ws.WriteJSON(session)
-	if err != nil {
-		h.log.Errorf("error when writting to client: ", err)
-	}
-
 	for {
 		var v api.Parser = &api.Errand{}
 

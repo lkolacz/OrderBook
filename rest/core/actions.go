@@ -107,6 +107,11 @@ func ProcessErrand(income string) ([]api.Transation, error) {
 				}
 
 				if breakAtTheEnd {
+					if !didDelete && orderBookSell[i].Peak > 0 && i+1 <= orderBookSellLen-1 && orderBookSell[i].Price >= orderBookSell[i+1].Price {
+						currentSell := orderBookSell[i]
+						orderBookSell = slices.Delete(orderBookSell, i, i+1)
+						orderBookSell = insertByPrice(orderBookSell, currentSell)
+					}
 					// no more operation at stock
 					break loopBuyFromSell
 				} else if didDelete {
@@ -114,11 +119,16 @@ func ProcessErrand(income string) ([]api.Transation, error) {
 				} else if i == orderBookSellLen-1 {
 					goto loopBuyFromSell
 				} else if i+1 <= orderBookSellLen {
-					if orderBookSell[i].Peak > 0 && orderBookSell[i].Price != orderBookSell[i+1].Price {
+					if orderBookSell[i].Peak > 0 && orderBookSell[i].Price >= orderBookSell[i+1].Price {
+						currentSell := orderBookSell[i]
+						orderBookSell = slices.Delete(orderBookSell, i, i+1)
+						orderBookSell = insertByPrice(orderBookSell, currentSell)
+						goto loopBuyFromSell
+					}
+					if orderBookSell[i].Price < orderBookSell[i+1].Price {
 						goto loopBuyFromSell
 					}
 				}
-
 			}
 		} // end for
 	} else {
@@ -155,6 +165,11 @@ func ProcessErrand(income string) ([]api.Transation, error) {
 				}
 
 				if breakAtTheEnd {
+					if !didDelete && orderBookBuy[i].Peak > 0 && i+1 <= orderBookBuyLen-1 && orderBookBuy[i].Price <= orderBookBuy[i+1].Price {
+						currentBuy := orderBookBuy[i]
+						orderBookBuy = slices.Delete(orderBookBuy, i, i+1)
+						orderBookBuy = insertByPrice(orderBookBuy, currentBuy)
+					}
 					// no more operation at stock
 					break loopBuyFromBuy
 				} else if didDelete {
@@ -162,7 +177,13 @@ func ProcessErrand(income string) ([]api.Transation, error) {
 				} else if i == orderBookBuyLen-1 {
 					goto loopBuyFromBuy
 				} else if i+1 <= orderBookBuyLen {
-					if orderBookBuy[i].Peak > 0 && orderBookBuy[i].Price != orderBookBuy[i+1].Price {
+					if orderBookBuy[i].Peak > 0 && orderBookBuy[i].Price <= orderBookBuy[i+1].Price {
+						currentBuy := orderBookBuy[i]
+						orderBookBuy = slices.Delete(orderBookBuy, i, i+1)
+						orderBookBuy = insertByPrice(orderBookBuy, currentBuy)
+						goto loopBuyFromBuy
+					}
+					if orderBookBuy[i].Price > orderBookBuy[i+1].Price {
 						goto loopBuyFromBuy
 					}
 				}
